@@ -20,8 +20,8 @@ def get_snowflake_session():
 session = get_snowflake_session()
 
 # Write directly to the app
-st.image('https://joinlu.com/assets/img/logo.png?v2', width=300)
-st.title("JOINLU Ai-Guided Maintenance POC")
+#st.image('https://joinlu.com/assets/img/logo.png?v2', width=300)
+st.title("Ai-Guided Maintenance POC")
 st.image('https://s3.amazonaws.com/assets.ottomotors.com/vehicles/product-card-OTTO_100.png', caption='', width=300)
 st.write('You can now ask any question you like of the LLM in regards to fixing the Otto 1500 AMR. Imagine this app running on a tablet for your maintenance crew as they go from robot to robot fixing common problems\n and entering repair logs. Those same repair logs are then uploaded to Snowflake and the model uses them for the next query.')
 
