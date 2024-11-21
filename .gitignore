@@ -1,7 +1,7 @@
 # Exclude the exclude folder. Keys are in there
 exclude/
 
-.streamlit/
+.streamlit/secrets.toml
 
 # Exclude env folder
 env/
