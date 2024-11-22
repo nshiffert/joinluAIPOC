@@ -1,20 +1,19 @@
 import streamlit as st
 from snowflake.snowpark import Session
+from snowflake.snowpark.exceptions import SnowparkSQLException
 
 # Function to establish a Snowpark session
 @st.cache_resource
 def get_snowflake_session():
-    # Load connection parameters from Streamlit secrets
-    connection_parameters = {
-        "account": st.secrets["connections"]["snowflake"]["account"],
-        "user": st.secrets["connections"]["snowflake"]["user"],
-        "password": st.secrets["connections"]["snowflake"]["password"],
-        "warehouse": st.secrets["connections"]["snowflake"]["warehouse"],
-        "database": st.secrets["connections"]["snowflake"]["database"],
-        "schema": st.secrets["connections"]["snowflake"]["schema"],
-        "role": st.secrets["connections"]["snowflake"]["role"]
-    }
-    return Session.builder.configs(connection_parameters).create()
+    connection_params = st.secrets["connections"]["snowflake"]
+    try:
+        session = Session.builder.configs(connection_params).create()
+        # Validate the session
+        session.sql("SELECT CURRENT_TIMESTAMP").collect()
+        return session
+    except SnowparkSQLException:
+        # Reconnect if session is invalid
+        return Session.builder.configs(connection_params).create()
 
 # Initialize Snowpark session
 session = get_snowflake_session()
