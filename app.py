@@ -8,6 +8,7 @@ def get_snowflake_session():
     connection_params = st.secrets["connections"]["snowflake"]
     try:
         session = Session.builder.configs(connection_params).create()
+        session.sql("USE WAREHOUSE MEDIUM").collect()
         # Validate the session
         session.sql("SELECT CURRENT_TIMESTAMP").collect()
         return session
